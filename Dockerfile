@@ -33,6 +33,9 @@ RUN set -eux; \
 	;
 
 ###> recipes ###
+###> doctrine/doctrine-bundle ###
+RUN install-php-extensions pdo_pgsql
+###< doctrine/doctrine-bundle ###
 ###< recipes ###
 
 COPY --link frankenphp/conf.d/app.ini $PHP_INI_DIR/conf.d/
@@ -64,6 +67,16 @@ RUN set -eux; \
 	;
 
 COPY --link frankenphp/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
+
+# Configure non-root user.
+
+RUN apk --no-cache add shadow
+RUN groupmod -o -g 1000 www-data && \
+    usermod -o -u 1000 -g www-data www-data
+
+# Set up the working directory
+WORKDIR /app
+RUN chown -R www-data:www-data /app
 
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--watch" ]
 
