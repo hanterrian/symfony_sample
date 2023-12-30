@@ -131,9 +131,9 @@ class Comment
         return $this->state;
     }
 
-    public function setState(string $state): static
+    public function setState(CommentStatus $state): static
     {
-        $this->state = $state;
+        $this->state = $state->value;
 
         return $this;
     }

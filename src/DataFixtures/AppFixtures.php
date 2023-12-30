@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
             $comment->setAuthor($faker->firstName);
             $comment->setEmail($faker->email);
             $comment->setText($faker->realText());
-            $comment->setState(CommentStatus::PUBLISHED->value);
+            $comment->setState(CommentStatus::PUBLISHED);
             $comment->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime));
 
             $manager->persist($comment);
