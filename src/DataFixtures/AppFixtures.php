@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Comment;
 use App\Entity\Conference;
+use App\Enum\CommentStatus;
 use App\Repository\ConferenceRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -38,6 +39,7 @@ class AppFixtures extends Fixture
             $comment->setAuthor($faker->firstName);
             $comment->setEmail($faker->email);
             $comment->setText($faker->realText());
+            $comment->setState(CommentStatus::PUBLISHED->value);
             $comment->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime));
 
             $manager->persist($comment);
